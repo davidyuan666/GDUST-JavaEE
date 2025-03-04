@@ -1,6 +1,6 @@
 -- 创建数据库（如果不存在）
-CREATE DATABASE IF NOT EXISTS test;
-USE test;
+CREATE DATABASE IF NOT EXISTS gust;
+USE gust;
 
 -- 创建用户表
 CREATE TABLE IF NOT EXISTS users (
