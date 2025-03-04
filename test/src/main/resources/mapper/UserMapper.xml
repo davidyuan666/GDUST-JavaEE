@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.gust.mapper.UserMapper">
+    <select id="selectUserById" parameterType="int" resultType="org.gust.pojo.User">
+        SELECT * FROM users WHERE id = #{id}
+    </select>
+    
+    <select id="selectAllUsers" resultType="org.gust.pojo.User">
+        SELECT * FROM users
+    </select>
+    
+    <insert id="insertUser" parameterType="org.gust.pojo.User" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO users (username, email) VALUES (#{username}, #{email})
+    </insert>
+    
+    <update id="updateUser" parameterType="org.gust.pojo.User">
+        UPDATE users SET username = #{username}, email = #{email} WHERE id = #{id}
+    </update>
+    
+    <delete id="deleteUser" parameterType="int">
+        DELETE FROM users WHERE id = #{id}
+    </delete>
+</mapper>
