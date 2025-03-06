@@ -28,6 +28,30 @@
         </where>
     </select>
 
+     <!-- 使用choose when otherwise查询客户 -->
+    <select id="queryCustomersByChoose" parameterType="org.gust.pojo.Customer" resultType="org.gust.pojo.Customer">
+        SELECT 
+        <include refid="Base_Column_List" />
+        FROM customer
+        <where>
+            <choose>
+                <when test="name != null and name != ''">
+                    AND name LIKE CONCAT('%', #{name}, '%')
+                </when>
+                <when test="phone != null and phone != ''">
+                    AND phone LIKE CONCAT('%', #{phone}, '%')
+                </when>
+                <when test="email != null and email != ''">
+                    AND email LIKE CONCAT('%', #{email}, '%')
+                </when>
+                <otherwise>
+                    AND 1=1
+                </otherwise>
+            </choose>
+        </where>
+        ORDER BY id DESC
+    </select>
+
 
     <!-- 查询所有客户 -->
     <select id="selectAll" resultType="org.gust.pojo.Customer">

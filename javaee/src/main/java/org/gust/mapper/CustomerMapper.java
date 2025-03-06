@@ -22,4 +22,7 @@ public interface CustomerMapper {
 
     // 根据条件查询客户
     List<Customer> queryCustomersByCondition(Map<String, Object> queryParams);
+
+    // 根据条件查询客户
+    List<Customer> queryCustomersByChoose(Customer customer);
 }

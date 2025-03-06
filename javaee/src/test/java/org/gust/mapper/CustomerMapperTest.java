@@ -9,6 +9,8 @@ import org.gust.util.MyBatisUtil;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Date;
+
 
 public class CustomerMapperTest {
     private SqlSessionFactory sqlSessionFactory;
@@ -92,21 +94,15 @@ public class CustomerMapperTest {
             Customer queryParams = new Customer();
             queryParams.setName("李");  // 按名字模糊查询
             queryParams.setPhone("139");    // 按电话号码模糊查询
-            
 
-            // 将Customer对象转换为Map
-            Map<String, Object> paramMap = new HashMap<>();
-            paramMap.put("name", queryParams.getName());
-            paramMap.put("phone", queryParams.getPhone());
-            
-
-            // 执行组合查询
-            List<Customer> customers = mapper.queryCustomersByCondition(paramMap);
+            // 直接使用Customer对象进行查询
+            List<Customer> customers = mapper.queryCustomersByChoose(queryParams);
             
             // 验证查询结果
             customers.forEach(System.out::println);
         } 
     }
+
 
 
 }
