@@ -39,9 +39,14 @@ public class UserMapperTest {
     public void testInsertUser() {
         try (SqlSession session = sqlSessionFactory.openSession(true)) {
             UserMapper mapper = session.getMapper(UserMapper.class);
+             // 使用时间戳生成唯一的用户名和邮箱
+            long timestamp = System.currentTimeMillis();
+            String randomUsername = "user_" + timestamp;
+            String randomEmail = "user_" + timestamp + "@example.com";
+            
             User user = new User();
-            user.setUsername("newuser");
-            user.setEmail("newuser@example.com");
+            user.setUsername(randomUsername);
+            user.setEmail(randomEmail);
             mapper.insertUser(user);
             System.out.println("Inserted user with ID: " + user.getId());
         }
@@ -62,8 +67,8 @@ public class UserMapperTest {
     public void testDeleteUser() {
         try (SqlSession session = sqlSessionFactory.openSession(true)) {
             UserMapper mapper = session.getMapper(UserMapper.class);
-            mapper.deleteUser(2);
-            System.out.println("Deleted user with ID: 2");
+            mapper.deleteUser(10);
+            System.out.println("Deleted user with ID: 10");
         }
     }
 }
