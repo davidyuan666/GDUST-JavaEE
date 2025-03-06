@@ -16,3 +16,16 @@ INSERT INTO users (username, email) VALUES
     ('lisi', 'lisi@example.com'),
     ('wangwu', 'wangwu@example.com'),
     ('zhaoliu', 'zhaoliu@example.com');
+
+
+-- 完整的表结构现在应该是：
+CREATE TABLE customer (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255),
+    phone VARCHAR(20),
+    email VARCHAR(255),
+    address VARCHAR(255),
+    jobs VARCHAR(255),
+    create_time DATETIME,
+    update_time DATETIME
+);
