@@ -19,5 +19,6 @@
     <!-- 映射器配置 -->
     <mappers>
         <mapper resource="mapper/UserMapper.xml"/>
+        <mapper resource="mapper/CustomerMapper.xml"/>
     </mappers>
 </configuration>
