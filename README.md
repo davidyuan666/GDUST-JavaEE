@@ -1,17 +1,17 @@
 # GUST_Projects
 
-这是广东科技学院(Guangdong University of Science and Technology)的教学项目源码仓库。
+This is the teaching project source code repository for Guangdong University of Science and Technology.
 
-## 简介
+## Introduction
 
-本仓库包含了广东科技学院的教学案例和项目源代码，用于教学参考和学习使用。
+This repository contains teaching examples and project source code from Guangdong University of Science and Technology, intended for teaching reference and learning purposes.
 
-## 使用说明
+## Usage Guidelines
 
-1. 本仓库中的代码仅供学习参考
-2. 请遵守相关的开源协议
-3. 如有问题可以提交 Issue 讨论
+1. The code in this repository is for learning reference only
+2. Please comply with relevant open source licenses
+3. If you have any questions, feel free to submit an Issue for discussion
 
-## 贡献
+## Contributing
 
-欢迎广科师生参与项目建设，提交 Pull Request 来完善项目内容。
+Welcome GUST faculty and students to participate in project development. Submit Pull Requests to improve the project content.
