@@ -16,7 +16,6 @@ public class MyBatisUtil {
             InputStream inputStream = Resources.getResourceAsStream(resource);
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RuntimeException("Error initializing SqlSessionFactory: " + e);
         }
     }

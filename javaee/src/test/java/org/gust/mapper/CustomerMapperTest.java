@@ -20,89 +20,163 @@ public class CustomerMapperTest {
         sqlSessionFactory = MyBatisUtil.getSqlSessionFactory();
     }
 
+    /**
+     * 根据客户姓名和职业组合条件查询客户信息列表
+     */
     @Test
-    public void testInsertCustomer() {
-        try (SqlSession session = sqlSessionFactory.openSession()) {
-            CustomerMapper mapper = session.getMapper(CustomerMapper.class);
-            // 创建新客户对象
+    public void testFindCustomerByNameAndJobs() {
+        SqlSession session = null;
+        try {
+            // 通过工具类获取SqlSession对象
+            session = sqlSessionFactory.openSession();
+            
+            // 创建Customer对象，封装需要组合查询的条件
             Customer customer = new Customer();
             customer.setName("李四");
-            customer.setPhone("13912345678");
-            customer.setEmail("lisi@example.com");
-            customer.setAddress("北京市朝阳区");
             customer.setJobs("工程师");
             
-            // 执行插入操作
-            mapper.insert(customer);
+            // 执行SqlSession的查询方法，返回结果集
+            List<Customer> customers = session.selectList(
+                "org.gust.mapper.CustomerMapper.findCustomerByNameAndJobs", 
+                customer
+            );
             
-            // 提交事务
-            session.commit();
-            
-            // 验证ID是否被正确设置
-            assert customer.getId() != null : "插入后的ID不应该为null";
-            System.out.println("插入成功，新客户ID: " + customer.getId());
+            // 输出查询结果信息
+            for (Customer customer2 : customers) {
+                System.out.println(customer2);
+            }
+        } catch (Exception e) {
+            System.out.println("查询客户信息失败：" + e.getMessage());
+        } finally {
+            // 关闭SqlSession
+            if (session != null) {
+                session.close();
+            }
         }
     }
 
-
-
+    /**
+     * 根据客户姓名或职业查询客户信息列表
+     */
     @Test
-    public void testQueryAllCustomers() {
-        try (SqlSession session = sqlSessionFactory.openSession()) {
-            CustomerMapper mapper = session.getMapper(CustomerMapper.class);
+    public void testFindCustomerByNameOrJobs() {
+        SqlSession session = null;
+        try {
+            // 通过工具类获取SqlSession对象
+            session = sqlSessionFactory.openSession();
             
-            // 查询所有客户
-            List<Customer> customers = mapper.selectAll();
+            // 创建Customer对象，封装需要组合查询的条件
+            Customer customer = new Customer();
+             customer.setName("李四");
+             customer.setJobs("老师");
             
-            // 验证查询结果
-            assert customers != null;
-            System.out.println("总共查询到 " + customers.size() + " 个客户:");
-            customers.forEach(customer -> {
-                System.out.println("ID: " + customer.getId() + 
-                                 ", 姓名: " + customer.getName() + 
-                                 ", 电话: " + customer.getPhone() + 
-                                 ", 职位: " + customer.getJobs());
-            });
+            // 执行SqlSession的查询方法，返回结果集
+            List<Customer> customers = session.selectList(
+                "org.gust.mapper.CustomerMapper.findCustomerByNameOrJobs", 
+                customer
+            );
+            
+            // 输出查询结果信息
+            for (Customer customer2 : customers) {
+                System.out.println(customer2);
+            }
+        } catch (Exception e) {
+            System.out.println("查询客户信息失败：" + e.getMessage());
+        } finally {
+            // 关闭SqlSession
+            if (session != null) {
+                session.close();
+            }
         }
     }
 
+    /**
+     * 使用set元素更新客户信息
+     */
     @Test
-    public void testDeleteCustomer() {
-        try (SqlSession session = sqlSessionFactory.openSession()) {
-            CustomerMapper mapper = session.getMapper(CustomerMapper.class);
-
-            // 指定要删除的客户ID
-            Long customerId = 1L; // 替换为实际要删除的客户ID
-
-            // 执行删除操作
-            mapper.delete(customerId);
-
-            // 提交事务
-            session.commit();
-
-            // 验证删除结果
-            System.out.println("成功删除客户，ID: " + customerId);
+    public void testUpdateCustomerBySet() {
+        SqlSession session = null;
+        try {
+            // 获取SqlSession
+            session = sqlSessionFactory.openSession();
+            
+            // 创建Customer对象，并向对象中添加数据
+            Customer customer = new Customer();
+            customer.setId(3L);
+            customer.setPhone("1111111");
+            
+            // 执行SqlSession的更新方法，返回的是SQL语句影响的行数
+            int rows = session.update(
+                "org.gust.mapper.CustomerMapper.updateCustomerBySet", 
+                customer
+            );
+            
+            // 通过返回结果判断更新操作是否执行成功
+            if (rows > 0) {
+                System.out.println("您成功修改了" + rows + "条数据！");
+                // 提交事务
+                session.commit();
+            } else {
+                System.out.println("执行修改操作失败！！！");
+                // 回滚事务
+                session.rollback();
+            }
+        } catch (Exception e) {
+            System.out.println("更新客户信息失败：" + e.getMessage());
+            // 发生异常时回滚事务
+            if (session != null) {
+                session.rollback();
+            }
+        } finally {
+            // 关闭SqlSession
+            if (session != null) {
+                session.close();
+            }
         }
     }
 
-
+    /**
+     * 使用trim元素更新客户信息
+     */
     @Test
-    public void testQueryCustomersbyCondition() {
-        try (SqlSession session = sqlSessionFactory.openSession()) {
-            CustomerMapper mapper = session.getMapper(CustomerMapper.class);
-            // 创建查询条件
-            Customer queryParams = new Customer();
-            queryParams.setName("李");  // 按名字模糊查询
-            queryParams.setPhone("139");    // 按电话号码模糊查询
-
-            // 直接使用Customer对象进行查询
-            List<Customer> customers = mapper.queryCustomersByChoose(queryParams);
+    public void testUpdateCustomerByTrim() {
+        SqlSession session = null;
+        try {
+            // 获取SqlSession
+            session = sqlSessionFactory.openSession();
             
-            // 验证查询结果
-            customers.forEach(System.out::println);
-        } 
+            // 创建Customer对象，并向对象中添加数据
+            Customer customer = new Customer();
+            customer.setId(3L);
+            customer.setPhone("222222222");
+            
+            // 执行SqlSession的更新方法，返回的是SQL语句影响的行数
+            int rows = session.update(
+                "org.gust.mapper.CustomerMapper.updateCustomerByTrim", 
+                customer
+            );
+            
+            // 通过返回结果判断更新操作是否执行成功
+            if (rows > 0) {
+                System.out.println("您成功修改了" + rows + "条数据！");
+                // 提交事务
+                session.commit();
+            } else {
+                System.out.println("执行修改操作失败！！！");
+                // 回滚事务
+                session.rollback();
+            }
+        } catch (Exception e) {
+            System.out.println("更新客户信息失败：" + e.getMessage());
+            // 发生异常时回滚事务
+            if (session != null) {
+                session.rollback();
+            }
+        } finally {
+            // 关闭SqlSession
+            if (session != null) {
+                session.close();
+            }
+        }
     }
-
-
-
 }

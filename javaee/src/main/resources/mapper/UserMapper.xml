@@ -7,9 +7,51 @@
     <sql id="Base_Column_List">
         id, username, email
     </sql>
+
+      <!-- 查询所有客户 -->
+    <select id="selectAll" resultType="org.gust.pojo.User">
+        SELECT 
+        <include refid="Base_Column_List" />
+        FROM users
+        ORDER BY id DESC
+    </select>
+
+
+    <!-- 插入数据 -->
+    <insert id="insert" parameterType="org.gust.pojo.User" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO users (
+            username, email
+        ) VALUES (
+            #{username}, #{email}
+        )
+    </insert>
+
+    <!-- 更新数据 -->
+    <update id="update" parameterType="org.gust.pojo.User">
+        UPDATE users
+        <set>
+            <if test="username != null and username != ''">
+                username = #{username},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="address != null and address != ''">
+                address = #{address}
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 删除数据 -->
+    <delete id="delete" parameterType="java.lang.Long">
+        DELETE FROM users WHERE id = #{id}
+    </delete>
     
     <select id="selectUserById" parameterType="int" resultType="org.gust.pojo.User">
-        SELECT * FROM users WHERE id = #{id}
+        SELECT 
+        <include refid="Base_Column_List" />
+        FROM users WHERE id = #{id}
     </select>
     
     <select id="selectAllUsers" resultType="org.gust.pojo.User">

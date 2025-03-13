@@ -6,7 +6,7 @@
         id, name, phone, email, address, jobs
     </sql>
 
-
+    <!-- 使用if标签查询客户 -->
     <select id="queryCustomersByCondition" parameterType="org.gust.pojo.Customer" resultType="org.gust.pojo.Customer">
         SELECT * FROM customer
         <where>
@@ -53,49 +53,123 @@
     </select>
 
 
-    <!-- 查询所有客户 -->
-    <select id="selectAll" resultType="org.gust.pojo.Customer">
-        SELECT 
-        <include refid="Base_Column_List" />
-        FROM customer
-        ORDER BY id DESC
+    <!-- <if>元素使用 -->
+    <select id="findCustomerByNameAndJobs" parameterType="org.gust.pojo.Customer"
+            resultType="org.gust.pojo.Customer">
+        select * from customer where 1=1
+        <if test="name !=null and name !=''">
+            and name like concat('%',#{name}, '%')
+        </if>
+        <if test="jobs !=null and jobs !=''">
+            and jobs= #{jobs}
+        </if>
+    </select>
+
+    <!--<choose>(<when>、<otherwise>)元素使用 -->
+    <select id="findCustomerByNameOrJobs" parameterType="org.gust.pojo.Customer"
+            resultType="org.gust.pojo.Customer">
+        select * from customer where 1=1
+        <choose>
+            <!--条件判断 -->
+            <when test="name !=null and name !=''">
+                and name like concat('%',#{name}, '%')
+            </when>
+            <when test="jobs !=null and jobs !=''">
+                and jobs= #{jobs}
+            </when>
+            <otherwise>
+                and phone is not null
+            </otherwise>
+        </choose>
+    </select>
+
+    <!-- <where>元素使用 -->
+    <select id="findCustomerByNameAndJobs2" parameterType="org.gust.pojo.Customer"
+            resultType="org.gust.pojo.Customer">
+        select * from customer
+        <where>
+            <if test="name !=null and name !=''">
+                and name like concat('%',#{name}, '%')
+            </if>
+            <if test="jobs !=null and jobs !=''">
+                and jobs= #{jobs}
+            </if>
+        </where>
+    </select>
+
+    <!-- <trim>元素使用 -->
+    <select id="findCustomerByNameAndJobs3" parameterType="org.gust.pojo.Customer"
+            resultType="org.gust.pojo.Customer">
+        select * from customer
+        <trim prefix="where" prefixOverrides="and">
+            <if test="name !=null and name !=''">
+                and name like concat('%',#{name}, '%')
+            </if>
+            <if test="jobs !=null and jobs !=''">
+                and jobs= #{jobs}
+            </if>
+        </trim>
     </select>
 
 
-    <!-- 插入数据 -->
-    <insert id="insert" parameterType="org.gust.pojo.Customer" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO customer (
-            name, phone, email, address, jobs, create_time, update_time
-        ) VALUES (
-            #{name}, #{phone}, #{email}, #{address}, #{jobs}, NOW(), NOW()
-        )
-    </insert>
-
-    <!-- 更新数据 -->
-    <update id="update" parameterType="org.gust.pojo.Customer">
-        UPDATE customer
+    <!-- <set>元素 -->
+    <update id="updateCustomerBySet" parameterType="org.gust.pojo.Customer">
+        update customer
         <set>
-            <if test="name != null and name != ''">
-                name = #{name},
+            <if test="name !=null and name !=''">
+                name=#{name},
             </if>
-            <if test="phone != null and phone != ''">
-                phone = #{phone},
+            <if test="jobs !=null and jobs !=''">
+                jobs=#{jobs},
             </if>
-            <if test="email != null and email != ''">
-                email = #{email},
-            </if>
-            <if test="jobs != null and jobs != ''">
-                jobs = #{jobs},
-            </if>
-            <if test="address != null and address != ''">
-                address = #{address},
+            <if test="phone !=null and phone !=''">
+                phone=#{phone},
             </if>
         </set>
-        WHERE id = #{id}
+        where id=#{id}
     </update>
 
-    <!-- 删除数据 -->
-    <delete id="delete" parameterType="java.lang.Long">
-        DELETE FROM customer WHERE id = #{id}
-    </delete>
+    <!-- <trim>元素的更新 -->
+    <update id="updateCustomerByTrim" parameterType="org.gust.pojo.Customer">
+        update customer
+        <trim prefix="set" suffixOverrides=",">
+            <if test="name !=null and name !=''">
+                name=#{name},
+            </if>
+            <if test="jobs !=null and jobs !=''">
+                jobs=#{jobs},
+            </if>
+            <if test="phone !=null and phone !=''">
+                phone=#{phone},
+            </if>
+        </trim>
+        where id=#{id}
+    </update>
+
+    <!--<foreach>元素使用 -->
+    <select id="findByArray" parameterType="java.util.Arrays" resultType="org.gust.pojo.Customer">
+        select * from customer where id in
+        <foreach item="id" index="index" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <!--<foreach>元素使用 -->
+    <select id="findByList" parameterType="java.util.Arrays" resultType="org.gust.pojo.Customer">
+        select * from customer where id in
+        <foreach item="id" index="index" collection="list" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <!--<foreach>元素使用 -->
+    <select id="findByMap" parameterType="java.util.Map" resultType="org.gust.pojo.Customer">
+        select * from customer where jobs=#{jobs} and id in
+        <foreach item="roleMap" index="index" collection="id" open="(" separator="," close=")">
+            #{roleMap}
+        </foreach>
+    </select>
+
+
+
 </mapper>

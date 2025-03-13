@@ -29,3 +29,13 @@ CREATE TABLE customer (
     create_time DATETIME,
     update_time DATETIME
 );
+
+
+INSERT INTO customer (name, phone, email, address, jobs, create_time, update_time) VALUES 
+('张三', '13800138000', 'zhangsan@example.com', '北京市海淀区', '工程师', NOW(), NOW()),
+('李四', '13800138001', 'lisi@example.com', '北京市朝阳区', '经理', NOW(), NOW()),
+('王五', '13800138002', 'wangwu@example.com', '北京市西城区', '经理', NOW(), NOW()),
+('赵六', '13800138003', 'zhaoliu@example.com', '北京市东城区', '经理', NOW(), NOW());
+
+
+

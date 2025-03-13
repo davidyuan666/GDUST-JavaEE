@@ -8,21 +8,30 @@ public interface CustomerMapper {
     // 根据ID查询客户
     Customer selectCustomerById(Long id);
     
-    // 查询所有客户
-    List<Customer> selectAll();
-    
-    // 插入新客户
-    void insert(Customer customer);
-    
-    // 更新客户信息
-    void update(Customer customer);
-    
-    // 删除客户
-    void delete(Long id);
-
-    // 根据条件查询客户
     List<Customer> queryCustomersByCondition(Map<String, Object> queryParams);
 
     // 根据条件查询客户
     List<Customer> queryCustomersByChoose(Customer customer);
+
+    List<Customer> findCustomerByNameAndJobs(Customer customer);
+
+    List<Customer> findCustomerByNameOrJobs(Customer customer);
+
+    List<Customer> findCustomerByNameAndJobs2(Customer customer);
+
+    List<Customer> findCustomerByNameAndJobs3(Customer customer);
+
+    List<Customer> findCustomerByNameAndJobs4(Customer customer);
+
+    void updateCustomerBySet(Customer customer);
+
+    void updateCustomerByTrim(Customer customer);
+
+    List<Customer> findByArray(Long[] ids);
+
+    List<Customer> findByList(List<Long> ids);
+
+    List<Customer> findByMap(Map<String, Object> map);
+    
+    
 }
