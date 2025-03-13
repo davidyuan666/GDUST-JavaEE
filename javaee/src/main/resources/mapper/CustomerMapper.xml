@@ -6,6 +6,16 @@
         id, name, phone, email, address, jobs
     </sql>
 
+    <!-- 使用if标签查询客户 
+    可能生成的SQL示例:
+    SELECT * FROM customer 
+    WHERE name LIKE '%张%' 
+    AND phone LIKE '%1234%' 
+    AND email LIKE '%test@%' 
+    AND address LIKE '%北京%' 
+    AND jobs LIKE '%工程师%'
+    注：实际SQL取决于传入的参数值，如果某个参数为null或空字符串，对应的条件不会被添加
+    -->
     <!-- 使用if标签查询客户 -->
     <select id="queryCustomersByCondition" parameterType="org.gust.pojo.Customer" resultType="org.gust.pojo.Customer">
         SELECT * FROM customer
@@ -28,7 +38,27 @@
         </where>
     </select>
 
-     <!-- 使用choose when otherwise查询客户 -->
+
+     <!-- 使用choose when otherwise查询客户
+    可能生成的SQL示例:
+    1. 当name不为空时:
+    SELECT id, name, phone, email, address, jobs 
+    FROM customer 
+    WHERE name LIKE '%张%' 
+    ORDER BY id DESC
+
+    2. 当name为空，phone不为空时:
+    SELECT id, name, phone, email, address, jobs 
+    FROM customer 
+    WHERE phone LIKE '%1234%' 
+    ORDER BY id DESC
+
+    3. 当所有条件都不满足时:
+    SELECT id, name, phone, email, address, jobs 
+    FROM customer 
+    WHERE 1=1 
+    ORDER BY id DESC
+    -->
     <select id="queryCustomersByChoose" parameterType="org.gust.pojo.Customer" resultType="org.gust.pojo.Customer">
         SELECT 
         <include refid="Base_Column_List" />
@@ -53,7 +83,13 @@
     </select>
 
 
-    <!-- <if>元素使用 -->
+    <!-- findCustomerByNameAndJobs 
+    可能生成的SQL示例:
+    SELECT * FROM customer 
+    WHERE 1=1 
+    AND name LIKE '%张%' 
+    AND jobs='工程师'
+    -->
     <select id="findCustomerByNameAndJobs" parameterType="org.gust.pojo.Customer"
             resultType="org.gust.pojo.Customer">
         select * from customer where 1=1
@@ -112,7 +148,13 @@
     </select>
 
 
-    <!-- <set>元素 -->
+    <!-- updateCustomerBySet 
+    可能生成的SQL示例:
+    UPDATE customer 
+    SET name='张三', jobs='工程师', phone='12345678' 
+    WHERE id=1
+    注：只有非空的字段才会被更新
+    -->
     <update id="updateCustomerBySet" parameterType="org.gust.pojo.Customer">
         update customer
         <set>
@@ -146,7 +188,11 @@
         where id=#{id}
     </update>
 
-    <!--<foreach>元素使用 -->
+    <!-- findByArray 
+    可能生成的SQL示例:
+    SELECT * FROM customer 
+    WHERE id IN (1,2,3,4,5)
+    -->
     <select id="findByArray" parameterType="java.util.Arrays" resultType="org.gust.pojo.Customer">
         select * from customer where id in
         <foreach item="id" index="index" collection="array" open="(" separator="," close=")">
