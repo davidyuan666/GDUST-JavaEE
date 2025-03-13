@@ -123,3 +123,14 @@ INSERT INTO order_items (order_id, product_id, quantity) VALUES
 
 
 
+-- 创建图书表
+CREATE TABLE IF NOT EXISTS books (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    bookName VARCHAR(255),
+    price DOUBLE,
+    author VARCHAR(40)
+);
+
+-- 插入图书示例数据
+INSERT INTO books (bookName, price, author) VALUES
+    ('Java基础入门', 45.0, '传智播客高教产品研发部');

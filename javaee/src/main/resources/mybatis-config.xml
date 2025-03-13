@@ -9,7 +9,9 @@
         <!-- 打开延迟加载的开关 -->  
         <setting name="lazyLoadingEnabled" value="true"/>  
         <!-- 将积极加载改为消息加载，即按需加载 -->  
-        <setting name="aggressiveLazyLoading" value="false"/>  
+        <setting name="aggressiveLazyLoading" value="false"/> 
+        <!-- 开启二级缓存 -->
+        <setting name="cacheEnabled" value="true" /> 
     </settings>
 
     <!-- 环境配置 -->
@@ -33,7 +35,10 @@
         <mapper resource="mapper/IdCardMapper.xml"/>
         <mapper resource="mapper/OrderMapper.xml"/>
         <mapper resource="mapper/ProductMapper.xml"/>
+        <mapper resource="mapper/BookMapper.xml"/>
     </mappers>
+
+
 
 
 
