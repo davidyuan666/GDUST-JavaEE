@@ -31,6 +31,8 @@
         <mapper resource="mapper/CustomerMapper.xml"/>
         <mapper resource="mapper/PersonMapper.xml"/>
         <mapper resource="mapper/IdCardMapper.xml"/>
+        <mapper resource="mapper/OrderMapper.xml"/>
+        <mapper resource="mapper/ProductMapper.xml"/>
     </mappers>
 
 

@@ -3,6 +3,6 @@
 <mapper namespace="org.gust.mapper.IdCardMapper">
     <!-- 根据id查询证件信息 -->
     <select id="findCodeById" parameterType="Integer" resultType="org.gust.pojo.IdCard">
-        SELECT * from idcard where id=#{id}
+        SELECT * from idcards where id=#{id}
     </select>
 </mapper>

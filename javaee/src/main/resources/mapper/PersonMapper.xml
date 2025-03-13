@@ -10,7 +10,7 @@
             age,
             sex,
             card_id
-        FROM person 
+        FROM persons 
         WHERE id = #{id}
     </select>
 
