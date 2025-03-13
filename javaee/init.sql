@@ -19,7 +19,7 @@ INSERT INTO users (username, email) VALUES
 
 
 -- 创建订单表并与用户表关联
-CREATE TABLE orders (
+CREATE TABLE IF NOT EXISTS orders (
     id int(32) PRIMARY KEY AUTO_INCREMENT,
     order_number varchar(32),
     order_price decimal(10,2),
@@ -37,7 +37,7 @@ INSERT INTO orders (order_number, order_price, user_id) VALUES
     
 
 -- 完整的表结构现在应该是：
-CREATE TABLE customer (
+CREATE TABLE IF NOT EXISTS customer (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255),
     phone VARCHAR(20),
@@ -56,7 +56,7 @@ INSERT INTO customer (name, phone, email, address, jobs, create_time, update_tim
 ('赵六', '13800138003', 'zhaoliu@example.com', '北京市东城区', '经理', NOW(), NOW());
 
 
-CREATE TABLE  idcard( 
+CREATE TABLE IF NOT EXISTS idcard( 
      id INT PRIMARY KEY AUTO_INCREMENT,
      CODE VARCHAR(18)	
 );
@@ -68,7 +68,7 @@ INSERT INTO idcard(CODE) VALUES('152221198711020626');
 INSERT INTO idcard(CODE) VALUES('152221198711020627');
 
 
-CREATE TABLE  person( 
+CREATE TABLE IF NOT EXISTS person( 
      id INT PRIMARY KEY AUTO_INCREMENT,
      name VARCHAR(20),
      age INT,
