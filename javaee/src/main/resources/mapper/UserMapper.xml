@@ -69,4 +69,29 @@
     <delete id="deleteUser" parameterType="int">
         DELETE FROM users WHERE id = #{id}
     </delete>
+
+
+    <!-- 一对多关联映射 -->
+    <select id="findUserWithOrders" resultMap="UserWithOrdersMap" parameterType="int">
+        SELECT u.*, o.*
+        FROM users u
+        LEFT JOIN orders o ON u.id = o.user_id
+        WHERE u.id = #{userId}
+    </select>
+
+    <resultMap id="UserWithOrdersMap" type="org.gust.pojo.User">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="email" column="email"/>
+        <collection property="orders" ofType="org.gust.pojo.Order">
+            <id property="id" column="id"/>
+            <result property="number" column="order_number"/>
+            <result property="userId" column="user_id"/>
+            <!-- Add other order properties as needed -->
+        </collection>
+    </resultMap>
+
+
+
+
 </mapper>

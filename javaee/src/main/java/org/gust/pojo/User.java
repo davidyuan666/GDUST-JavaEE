@@ -1,9 +1,13 @@
 package org.gust.pojo;
+import org.gust.pojo.Order;
+import java.util.List;
 
 public class User {
     private Integer id;
     private String username;
     private String email;
+    private List<Order> orders;  // 用户关联的订单
+
 
     // Getters and Setters
     public Integer getId() {
@@ -30,6 +34,16 @@ public class User {
         this.email = email;
     }
 
+    // Add getter and setter for orders
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    
     // toString method for printing
     @Override
     public String toString() {

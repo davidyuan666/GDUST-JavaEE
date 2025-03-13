@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.gust.mapper.PersonMapper">
+    <select id="findPersonById" parameterType="Integer" resultMap="PersonWithIdCardResult">
+        SELECT 
+            id,
+            name,
+            age,
+            sex,
+            card_id
+        FROM person 
+        WHERE id = #{id}
+    </select>
+
+    <resultMap type="org.gust.pojo.Person" id="PersonWithIdCardResult">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="age" column="age"/>
+        <result property="sex" column="sex"/>
+        <association property="card" column="card_id" 
+                     javaType="org.gust.pojo.IdCard"
+                     select="org.gust.mapper.IdCardMapper.findCodeById"
+                     fetchType="lazy"/>
+    </resultMap>
+</mapper>

@@ -18,4 +18,7 @@ public interface UserMapper {
     
     // 删除用户
     void deleteUser(Integer id);
+
+    // 一对多关联映射
+    User findUserWithOrders(Integer userId);
 }
