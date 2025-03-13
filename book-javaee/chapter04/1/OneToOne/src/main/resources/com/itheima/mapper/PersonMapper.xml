@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.mapper.PersonMapper">
+
+    <!-- 嵌套结果：使用嵌套结果映射来处理重复的联合结果的子集 -->
+    <select id="findPersonById2" parameterType="Integer" resultMap="IdCardWithPersonResult2">
+
+        SELECT p.id, p.name, p.age, p.sex, idcard.id as idcard_id, idcard.code
+        from tb_person p,
+             tb_idcard idcard
+        where p.card_id = idcard.id
+          and p.id = #{id}
+
+    </select>
+    <resultMap type="Person" id="IdCardWithPersonResult2">
+
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="age" column="age"/>
+        <result property="sex" column="sex"/>
+
+        <association property="card" javaType="IdCard">
+            <id property="id" column="idcard_id"/>
+            <result property="code" column="code"/>
+        </association>
+
+    </resultMap>
+</mapper>

@@ -1,0 +1,125 @@
+USE mybatis;
+CREATE TABLE t_student(
+   sid INT PRIMARY KEY AUTO_INCREMENT,
+   sname VARCHAR(50),
+   sage INT
+);
+INSERT INTO t_student(sname,sage) VALUES('Lucy',25);
+INSERT INTO t_student(sname,sage) VALUES('Lili',20);
+INSERT INTO t_student(sname,sage) VALUES('Jim',20);
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.mapper.StudentMapper">
+    <resultMap type="com.itheima.pojo.Student" id="studentMap">
+        <id property="id" column="sid"/>
+        <result property="name" column="sname"/>
+        <result property="age" column="sage"/>
+    </resultMap>
+    <select id="findAllStudent" resultMap="studentMap">
+        select *
+        from t_student
+    </select>
+</mapper>
+
+mysql.driver=com.mysql.cj.jdbc.Driver
+mysql.url=jdbc:mysql://localhost:3306/mybatis?serverTimezone=UTC&useSSL=true&useUnicode=true&characterEncoding=utf8
+mysql.username=root
+mysql.password=123456
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!-- 环境配置 -->
+    <!-- 加载类路径下的属性文件 -->
+    <properties resource="db.properties"/>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <!-- 数据库连接相关配置 ,db.properties文件中的内容-->
+            <dataSource type="POOLED">
+                <property name="driver" value="${mysql.driver}"/>
+                <property name="url" value="${mysql.url}"/>
+                <property name="username" value="${mysql.username}"/>
+                <property name="password" value="${mysql.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <!-- mapping文件路径配置 -->
+    <mappers>
+        <mapper resource="mapper/UserMapper.xml"/>
+        <mapper resource="com/itheima/mapper/StudentMapper.xml"/>
+    </mappers>
+
+</configuration>
+
+import com.itheima.pojo.Student;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import java.io.IOException;
+import java.io.Reader;
+import java.util.List;
+
+/**
+ * Auther:bingli
+ * ClassName:StudentTest
+ * Package:PACKAGE_NAME
+ * Description:
+ *
+ * @date:2023/2/19-02-19 23:31
+ * @author:2550976002@qq.com
+ * @version:1.0
+ */
+public class StudentTest {
+
+    private SqlSessionFactory sqlSessionFactory;
+    private SqlSession sqlSession;
+
+    @Before
+    public void init() {
+        //定义读取文件名
+        String resources = "mybatis-config.xml";
+        //创建流
+        Reader reader = null;
+        try {
+            //读取mybatis-config.xml文件到reader对象中
+            reader = Resources.getResourceAsReader(resources);
+            //初始化mybatis,创建SqlSessionFactory类的对象
+            SqlSessionFactory sqlMapper = new SqlSessionFactoryBuilder().build(reader);
+            //创建session对象
+            sqlSession = sqlMapper.openSession();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void findAllStudentTest() {
+        // SqlSession执行映射文件中定义的SQL，并返回映射结果
+        List<Student> list = sqlSession.selectList("com.itheima.mapper.StudentMapper.findAllStudent");
+        for (Student student : list) {
+            System.out.println(student);
+        }
+    }
+
+    @After
+    public void destory() {
+        //提交事务
+        sqlSession.commit();
+        //关闭事务
+        sqlSession.close();
+    }
+}
+

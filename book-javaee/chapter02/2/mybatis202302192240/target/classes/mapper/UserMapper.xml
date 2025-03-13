@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper为映射的根节点-->
+<!-- mapper为映射的根节点，namespace指定Dao接口的完整类名
+mybatis会依据这个接口动态创建一个实现类去实现这个接口，
+而这个实现类是一个Mapper对象-->
+<mapper namespace="com.itheima.pojo.User">
+
+    <!--<select>元素的查询使用-->
+    <!--id ="接口中的方法名"  parameterType="传入的参数类型"  resultType = "返回实体类对象，使用包.类名"-->
+    <select id="findById" parameterType="int" resultType="com.itheima.pojo.User">
+        select *
+        from users
+        where uid = #{id}
+    </select>
+
+    <!--    &lt;!&ndash;<insert>元素的插入使用&ndash;&gt;-->
+    <insert id="addUser" parameterType="com.itheima.pojo.User">
+        insert into users(uid, uname, uage)
+        values (#{uid}, #{uname}, #{uage})
+    </insert>
+
+    <!--    &lt;!&ndash;使用支持主键自动增长的数据库获取主键值&ndash;&gt;-->
+    <!--    <insert id="addUser" parameterType="com.itheima.pojo.User" keyProperty="uid" useGeneratedKeys="true">-->
+    <!--        insert into users(uid, uname, uage)-->
+    <!--        values (#{uid}, #{uname}, #{uage})-->
+    <!--    </insert>-->
+
+    <!--    &lt;!&ndash;使用不支持主键自动增长的数据库获取主键值&ndash;&gt;-->
+    <!--    <insert id="addUser" parameterType="com.itheima.pojo.User">-->
+    <!--        <selectKey keyProperty="uid" resultType="Integer" order="BEFORE" statementType="PREPARED">-->
+    <!--            select if(max(uid) is null , 1, max(uid)+1) as newId from users-->
+    <!--        </selectKey>>-->
+    <!--        insert into users(uid, uname, uage)-->
+    <!--        values (#{uid}, #{uname}, #{uage})-->
+    <!--    </insert>-->
+
+    <!--    &lt;!&ndash;<update>元素的更新使用&ndash;&gt;-->
+    <update id="updateUser" parameterType="com.itheima.pojo.User">
+        update users
+        set uname= #{uname},
+            uage = #{uage}
+        where uid = #{uid}
+    </update>
+
+    <!--    &lt;!&ndash;<delete>元素的删除使用&ndash;&gt;-->
+    <!--    <delete id="deleteUser" parameterType="Integer">-->
+    <!--        delete-->
+    <!--        from users-->
+    <!--        where uid = #{uid}-->
+    <!--    </delete>-->
+
+    <!--    &lt;!&ndash;<sel>元素&ndash;&gt;-->
+    <!--    <sql id="userColumns">${alias}.uid,${alias}.uname,${alias}.uage</sql>-->
+    <!--    <select id="findUserById" parameterType="Integer" resultType="com.itheima.pojo.User">-->
+    <!--        select-->
+    <!--        <include refid="userColumns">-->
+    <!--            <property name="alias" value="t1"/>-->
+    <!--        </include>>-->
+    <!--        from users where uid= #{id}-->
+    <!--    </select>-->
+
+    <!--    &lt;!&ndash;定义要查询的表 &ndash;&gt;-->
+    <!--    <sql id="someinclude">-->
+    <!--        from-->
+    <!--        <include refid="${include_target}" />-->
+    <!--    </sql>-->
+    <!--    &lt;!&ndash;定义查询列 &ndash;&gt;-->
+    <!--    <sql id="userColumns">-->
+    <!--        uid,uname,uage-->
+    <!--    </sql>-->
+    <!--    &lt;!&ndash;根据客户id查询客户信息 &ndash;&gt;-->
+    <!--    <select id="findUserById" parameterType="Integer" resultType="com.itheima.pojo.User">-->
+    <!--        select-->
+    <!--        <include refid="userColumns"/>-->
+    <!--        <include refid="someinclude">-->
+    <!--            <property name="include_target" value="users" />-->
+    <!--        </include>-->
+    <!--        where uid = #{uid}-->
+    <!--    </select>-->
+
+
+</mapper>

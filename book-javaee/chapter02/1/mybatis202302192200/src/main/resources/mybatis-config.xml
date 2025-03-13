@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!-- 环境配置 -->
+    <!-- 加载类路径下的属性文件 -->
+    <properties resource="db.properties"/>
+
+    <settings>
+        <!-- 是否开启缓存 -->
+        <setting name="cacheEnabled" value="true"/>
+        <!-- 是否开启延迟加载,如果开启,所有关联对象都会延迟加载 -->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!-- 是否开启关联对象属性的延迟加载,如果开启,对任意延迟属性的调用都会使用带有延迟加载属性的对象向完整加载,否则每种属性都按需加载 -->
+        <setting name="aggressiveLazyLoading" value="true"/>
+    </settings>
+
+    <!--    <typeAliases>-->
+    <!--        <typeAlias alias="User" type="com.itheima.pojo.User"/>-->
+    <!--    </typeAliases>-->
+
+    <typeAliases>
+        <package name="com.itheima.pojo"/>
+    </typeAliases>
+
+    <environments default="development">
+        <environment id="development">
+            <!--设置使用JDBC事务管理器-->
+            <transactionManager type="JDBC"/>
+            <!--配置数据源-->
+            <dataSource type="POOLED">
+                <!-- 数据库连接相关配置 ,db.properties文件中的内容-->
+                <!--数据库的driver-->
+                <property name="driver" value="${mysql.driver}"/>
+                <!--数据库的url-->
+                <property name="url" value="${mysql.url}"/>
+                <!--数据库的username-->
+                <property name="username" value="${mysql.username}"/>
+                <!--数据库的password-->
+                <property name="password" value="${mysql.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!--使用类路径引入映射文件-->
+    <!--    <mappers>-->
+    <!--        <mapper resource="mapper/UserMapper.xml"/>-->
+    <!--    </mappers>-->
+
+    <!--使用本地文件路径引入映射文件-->
+    <!--    <mappers>-->
+    <!--        <mapper url="file:///F:/广东科技学院/上课/2022-2023-2/Java EE 框架技术/code/mybatis202302192200/src/main/resources/mapper/UserMapper.xml"/>-->
+    <!--    </mappers>-->
+
+    <!--使用接口类路径引入映射文件-->
+    <!--    <mappers>-->
+    <!--        <mapper class="com.itheima.mapper.UserMapper"/>-->
+    <!--    </mappers>-->
+
+    <!--使用包名引入映射文件-->
+    <!--    <mappers>-->
+    <!--        <package name="com.itheima.mapper"/>-->
+    <!--    </mappers>-->
+
+
+</configuration>

@@ -1,0 +1,144 @@
+use mybatis;
+create table users(
+    uid int primary key auto_increment,
+    uname varchar(20) not null,
+    uage int not null
+);
+insert into users(uid,uname,uage) values(null,'张三',20),(null,'李四',18);
+
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper为映射的根节点-->
+<!-- mapper为映射的根节点，namespace指定Dao接口的完整类名
+mybatis会依据这个接口动态创建一个实现类去实现这个接口，
+而这个实现类是一个Mapper对象-->
+<mapper namespace="com.itheima.pojo.User">
+    <!--id ="接口中的方法名"
+　　parameterType="传入的参数类型"
+　　resultType = "返回实体类对象，使用包.类名"-->
+    <select id="findById" parameterType="int" resultType="com.itheima.pojo.User">
+        select *
+        from users
+        where uid = #{id}
+    </select>
+</mapper>
+
+mysql.driver=com.mysql.cj.jdbc.Driver
+mysql.url=jdbc:mysql://localhost:3306/mybatis?serverTimezone=UTC&useSSL=true&useUnicode=true&characterEncoding=utf8
+mysql.username=root
+mysql.password=123456
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!-- 环境配置 -->
+    <!-- 加载类路径下的属性文件 -->
+    <properties resource="db.properties"/>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <!-- 数据库连接相关配置 ,db.properties文件中的内容-->
+            <dataSource type="POOLED">
+                <property name="driver" value="${mysql.driver}"/>
+                <property name="url" value="${mysql.url}"/>
+                <property name="username" value="${mysql.username}"/>
+                <property name="password" value="${mysql.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <!-- mapping文件路径配置 -->
+    <mappers>
+        <mapper resource="mapper/UserMapper.xml"/>
+    </mappers>
+
+</configuration>
+
+
+import com.itheima.pojo.User;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.junit.Test;
+
+import java.io.IOException;
+import java.io.Reader;
+
+/**
+ * Auther:bingli
+ * ClassName:UserTest
+ * Package:PACKAGE_NAME
+ * Description:
+ *
+ * @date:2023/2/19-02-19 21:44
+ * @author:2550976002@qq.com
+ * @version:1.0
+ */
+public class UserTest {
+
+    @Test
+    public void userFindByIdTest() {
+        //读取文件的名称
+        String resources = "mybatis-config.xml";
+        //创建流
+        Reader reader = null;
+        try {
+            //读取mybatis-config.xml文件内容到reader对象中
+            reader = Resources.getResourceAsReader(resources);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //初始化mybatis数据库,创建SqlSessionFactory类的实例
+        SqlSessionFactory sqlMapper = new SqlSessionFactoryBuilder().build(reader);
+        //创建SqlSession实例
+        SqlSession session = sqlMapper.openSession();
+        //传入参数查询，返回结果
+        User user = session.selectOne("findById", 1);
+        //输出结果
+        System.out.println(user.getUname());
+        //关闭session
+        session.close();
+    }
+
+}
+
+
+<dependencies>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>3.5.2</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.13</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <!--<scope>test</scope>-->
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+    <build>
+        <!--   静态资源导出问题;目的是把src/main/java目录中的xml文件和properties配置文件包含到输出结果中，输出到classes目录中    -->
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+    </build>
