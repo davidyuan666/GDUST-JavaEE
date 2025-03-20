@@ -12,6 +12,7 @@ DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS products;
 DROP TABLE IF EXISTS customers;
 DROP TABLE IF EXISTS idcards;
+DROP TABLE IF EXISTS workers;
 
 
 
@@ -134,3 +135,23 @@ CREATE TABLE IF NOT EXISTS books (
 -- 插入图书示例数据
 INSERT INTO books (bookName, price, author) VALUES
     ('Java基础入门', 45.0, '传智播客高教产品研发部');
+
+
+
+-- mybatis annotation 注解
+
+CREATE TABLE  IF NOT EXISTS workers( 
+     id INT PRIMARY KEY AUTO_INCREMENT,
+     worker_name VARCHAR(32),
+     age INT,   
+     sex VARCHAR(8),
+     worker_id INT UNIQUE     
+);
+INSERT INTO workers(worker_name,age,sex,worker_id)VALUES('张三',32,'女',1001);
+INSERT INTO workers(worker_name,age,sex,worker_id)VALUES('李四',33,'男',1002);
+INSERT INTO workers(worker_name,age,sex,worker_id)VALUES('王五',34,'女',1003);
+INSERT INTO workers(worker_name,age,sex,worker_id)VALUES('赵六',35,'男',1004);
+
+
+
+

@@ -29,6 +29,20 @@
     
     <!-- 映射器配置 -->
     <mappers>
+
+    
+        <mapper class="org.gust.dao.WorkerMapper"/>
+        <mapper class="org.gust.dao.IdCardMapper"/>
+        <mapper class="org.gust.dao.PersonMapper"/>
+        <mapper class="org.gust.dao.UserMapper"/>
+        <mapper class="org.gust.dao.OrderMapper"/>
+        <mapper class="org.gust.dao.ProductMapper"/>   
+
+
+
+
+
+        
         <mapper resource="mapper/UserMapper.xml"/>
         <mapper resource="mapper/CustomerMapper.xml"/>
         <mapper resource="mapper/PersonMapper.xml"/>
@@ -36,7 +50,13 @@
         <mapper resource="mapper/OrderMapper.xml"/>
         <mapper resource="mapper/ProductMapper.xml"/>
         <mapper resource="mapper/BookMapper.xml"/>
+
+
+
     </mappers>
+
+
+
 
 
 
