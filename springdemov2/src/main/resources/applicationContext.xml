@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-	http://www.springframework.org/schema/beans/spring-beans.xsd">
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd">
+
+  
+    <!-- Enable component scanning for automatic bean detection自动扫描注解 -->
+    <context:component-scan base-package="edu.gust"></context:component-scan>
+
 
     <!-- 将指定类配置给Spring，让Spring创建HelloSpring对象的实例 -->
-    <bean id="helloBean" class="edu.gust.springdemov2.Hello">
+    <bean id="helloBean" class="edu.gust.beans.Hello">
         <!--为userName属性赋值-->
         <property name="userName" value="张三"></property>
     </bean>
@@ -32,6 +40,19 @@
     </bean>
 
 
+    <!-- <bean id="bean1" class="edu.gust.beans.Bean1"></bean> -->
+
+    <!-- <bean id="bean1" class="edu.gust.beans.Bean1" scope="singleton"></bean> -->
+
+    <bean id="bean1" class="edu.gust.beans.Bean1" scope="prototype"></bean>
+
+
+    <bean id="bean2" class="edu.gust.beans.Bean2Factory" factory-method="createBean"></bean>
+
+    <!-- 配置工厂 -->
+    <bean id="myBean3Factory" class="edu.gust.beans.Bean3Factory"></bean>
+    <!-- 使用factory-bean属性指向配置的实例工厂-->  
+    <bean id="bean3" factory-bean="myBean3Factory" factory-method="createBean"></bean>
 
 
 

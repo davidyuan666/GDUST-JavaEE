@@ -1,4 +1,4 @@
-package edu.gust.springdemov2;
+package edu.gust.beans;
 
 public class Hello {
     private String userName;

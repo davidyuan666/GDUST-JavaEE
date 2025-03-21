@@ -1,4 +1,4 @@
-package edu.gust.springdemov2;
+package edu.gust.beans;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
