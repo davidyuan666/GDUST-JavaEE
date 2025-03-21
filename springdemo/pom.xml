@@ -4,9 +4,9 @@
 	<modelVersion>4.0.0</modelVersion>
 	<!-- 移除Spring Boot parent -->
 	<groupId>edu.gust</groupId>
-	<artifactId>springdemov2</artifactId>
+	<artifactId>springdemo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>springdemov2</name>
+	<name>springdemo</name>
 	<description>Demo project for Spring</description>
 	<url/>
 	<licenses>
