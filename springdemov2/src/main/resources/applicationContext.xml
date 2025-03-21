@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 将指定类配置给Spring，让Spring创建HelloSpring对象的实例 -->
+    <bean id="helloBean" class="edu.gust.springdemov2.Hello">
+        <!--为userName属性赋值-->
+        <property name="userName" value="张三"></property>
+    </bean>
+
+    <bean id="user1Bean" class="edu.gust.pojo.User1">
+        <constructor-arg name="id" value="1">
+        </constructor-arg>
+        <constructor-arg name="name" value="张三">
+        </constructor-arg>
+        <constructor-arg name="password" 	value="123"></constructor-arg>
+    </bean>
+
+    <bean id="user2Bean" class="edu.gust.pojo.User2">
+        <property name="id" value="2"></property>
+        <property name="name" value="李四"></property>
+        <property name="password" value="456"></property>
+    </bean>
+
+    <bean id="userDaoBean" 	class="edu.gust.dao.impl.UserDao"></bean>
+
+
+    <bean id="userServiceBean" class="edu.gust.service.impl.UserService">
+        <property name="userDao" ref="userDaoBean"></property>
+    </bean>
+
+
+
+
+
+
+</beans>
