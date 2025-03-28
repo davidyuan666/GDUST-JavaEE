@@ -40,9 +40,9 @@
     </bean>
 
 
-    <!-- <bean id="bean1" class="edu.gust.beans.Bean1"></bean> -->
+<!--     <bean id="bean1" class="edu.gust.beans.Bean1"></bean> -->
 
-    <!-- <bean id="bean1" class="edu.gust.beans.Bean1" scope="singleton"></bean> -->
+<!--     <bean id="bean1" class="edu.gust.beans.Bean1" scope="singleton"></bean> -->
 
     <bean id="bean1" class="edu.gust.beans.Bean1" scope="prototype"></bean>
 
@@ -50,9 +50,9 @@
     <bean id="bean2" class="edu.gust.beans.Bean2Factory" factory-method="createBean"></bean>
 
     <!-- 配置工厂 -->
-    <bean id="myBean3Factory" class="edu.gust.beans.Bean3Factory"></bean>
+    <bean id="Bean3Factory" class="edu.gust.beans.Bean3Factory"></bean>
     <!-- 使用factory-bean属性指向配置的实例工厂-->  
-    <bean id="bean3" factory-bean="myBean3Factory" factory-method="createBean"></bean>
+    <bean id="bean3" factory-bean="Bean3Factory" factory-method="createBean"></bean>
 
 
 
