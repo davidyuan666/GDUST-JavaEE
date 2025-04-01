@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/context
-	http://www.springframework.org/schema/context/spring-context.xsd">
+	http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop.xsd">
 
   
     <!-- Enable component scanning for automatic bean detection自动扫描注解 -->
@@ -53,6 +56,30 @@
     <bean id="Bean3Factory" class="edu.gust.beans.Bean3Factory"></bean>
     <!-- 使用factory-bean属性指向配置的实例工厂-->  
     <bean id="bean3" factory-bean="Bean3Factory" factory-method="createBean"></bean>
+
+
+    <!-- 注册Bean -->
+    <bean name="userDao5" class="edu.gust.dao.impl.UserDao5"/>
+    <bean name="xmlAdvice" class="edu.gust.aop.XmlAdvice"/>
+
+
+    <aop:config>
+        <aop:pointcut id="pointcut" expression="execution(* edu.gust.dao.impl.UserDao5.*(..))"/>
+        <aop:aspect ref ="xmlAdvice">
+            <aop:before method="before" pointcut-ref="pointcut"/>
+            <aop:after-returning method="afterReturning" pointcut-ref="pointcut"/>
+            <aop:around method="around" pointcut-ref="pointcut"/>
+            <aop:after-throwing method="afterException" pointcut-ref="pointcut"/>
+            <aop:after method="after" pointcut-ref="pointcut"/>
+        </aop:aspect>
+    </aop:config>
+
+
+    <!-- 注册Bean -->
+    <bean name="userDao5_Anno" class="edu.gust.dao.impl.UserDao5"/>
+    <bean name="AnnoAdvice" class="edu.gust.aop.AnnoAdvice"/>
+    <!-- 开启@aspectj的自动代理支持 -->
+    <aop:aspectj-autoproxy/>
 
 
 
