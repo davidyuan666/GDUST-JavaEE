@@ -1,4 +1,4 @@
-# 广科项目集 | GDUST-Projects
+# 广科JAVAEE项目集 | GDUST-JavaEE
 
 This is the teaching project source code repository for Guangdong University of Science and Technology (GDUST).
 
