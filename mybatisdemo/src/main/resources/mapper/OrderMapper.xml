@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.gust.mapper.OrderMapper">
+    <select id="findOrderWithProduct" parameterType="Integer" resultMap="OrderWithProductResult">
+        select * from orders WHERE id=#{id}
+    </select>
+
+    <resultMap type="org.gust.pojo.Order" id="OrderWithProductResult">
+        <id property="id" column="id"/>
+        <result property="number" column="number"/>
+        <collection property="products" column="id" ofType="org.gust.pojo.Product"
+                  select="org.gust.mapper.ProductMapper.findProductById"/>
+    </resultMap>
+</mapper>

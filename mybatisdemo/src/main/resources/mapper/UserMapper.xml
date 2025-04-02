@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.gust.mapper.UserMapper">
+
+    <sql id="Base_Column_List">
+        id, username, email
+    </sql>
+
+      <!-- 查询所有客户 -->
+    <select id="selectAll" resultType="org.gust.pojo.User">
+        SELECT 
+        <include refid="Base_Column_List" />
+        FROM users
+        ORDER BY id DESC
+    </select>
+
+
+    <!-- 插入数据 -->
+    <insert id="insert" parameterType="org.gust.pojo.User" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO users (
+            username, email
+        ) VALUES (
+            #{username}, #{email}
+        )
+    </insert>
+
+    <!-- 更新数据 -->
+    <update id="update" parameterType="org.gust.pojo.User">
+        UPDATE users
+        <set>
+            <if test="username != null and username != ''">
+                username = #{username},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="address != null and address != ''">
+                address = #{address}
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <!-- 删除数据 -->
+    <delete id="delete" parameterType="java.lang.Long">
+        DELETE FROM users WHERE id = #{id}
+    </delete>
+    
+    <select id="selectUserById" parameterType="int" resultType="org.gust.pojo.User">
+        SELECT 
+        <include refid="Base_Column_List" />
+        FROM users WHERE id = #{id}
+    </select>
+    
+    <select id="selectAllUsers" resultType="org.gust.pojo.User">
+        SELECT * FROM users
+    </select>
+    
+    <insert id="insertUser" parameterType="org.gust.pojo.User" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO users (username, email) VALUES (#{username}, #{email})
+    </insert>
+    
+    <update id="updateUser" parameterType="org.gust.pojo.User">
+        UPDATE users SET username = #{username}, email = #{email} WHERE id = #{id}
+    </update>
+    
+    <delete id="deleteUser" parameterType="int">
+        DELETE FROM users WHERE id = #{id}
+    </delete>
+
+
+    <!-- 一对多关联映射 -->
+    <select id="findUserWithOrders" resultMap="UserWithOrdersMap" parameterType="int">
+        SELECT u.*, o.*
+        FROM users u
+        LEFT JOIN orders o ON u.id = o.user_id
+        WHERE u.id = #{userId}
+    </select>
+
+    <resultMap id="UserWithOrdersMap" type="org.gust.pojo.User">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="email" column="email"/>
+        <collection property="orders" ofType="org.gust.pojo.Order">
+            <id property="id" column="id"/>
+            <result property="number" column="order_number"/>
+            <result property="userId" column="user_id"/>
+            <!-- Add other order properties as needed -->
+        </collection>
+    </resultMap>
+
+
+
+
+</mapper>
