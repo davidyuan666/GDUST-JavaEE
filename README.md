@@ -14,4 +14,4 @@ This repository contains teaching examples and project source code from Guangdon
 
 ## Contributing
 
-Welcome GUST faculty and students to participate in project development. Submit Pull Requests to improve the project content.
+Welcome GDUST faculty and students to participate in project development. Submit Pull Requests to improve the project content.
