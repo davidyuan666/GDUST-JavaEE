@@ -1,6 +1,6 @@
-# GUST_Projects
+# GDUST-Projects
 
-This is the teaching project source code repository for Guangdong University of Science and Technology.
+This is the teaching project source code repository for Guangdong University of Science and Technology(GDUST).
 
 ## Introduction
 
