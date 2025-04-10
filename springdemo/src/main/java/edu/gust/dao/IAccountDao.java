@@ -15,5 +15,9 @@ public interface IAccountDao {
     // 查询所有账户
     public List<Account> findAllAccount();
 
+
+    // 转账 事务
+    public void transfer(String outUser,String inUser,Double money);
+
 }
 
