@@ -83,5 +83,29 @@
 
 
 
+    <!-- spring jdbc -->
+    <!-- 配置数据源 -->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+        <!-- Update URL to include SSL settings -->
+        <property name="url" value="jdbc:mysql://127.0.0.1:3306/spring?serverTimezone=UTC&amp;useSSL=false&amp;allowPublicKeyRetrieval=true"/>
+        <property name="username" value="root"/>
+        <property name="password" value="123456"/>
+    </bean>
+
+    <!-- Fix capitalization of jdbcTemplate bean id -->
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--配置注入类-->
+    <!-- <bean id="XXX" class="XXX">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean> -->
+
+
+
+
+
 
 </beans>

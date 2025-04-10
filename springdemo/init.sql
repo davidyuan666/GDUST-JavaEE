@@ -154,4 +154,5 @@ INSERT INTO workers(worker_name,age,sex,worker_id)VALUES('赵六',35,'男',1004)
 
 
 
-
+-- create database spring;
+-- use spring;
