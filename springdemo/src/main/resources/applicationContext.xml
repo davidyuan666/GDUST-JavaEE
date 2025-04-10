@@ -99,9 +99,10 @@
     </bean>
 
     <!--配置注入类-->
-    <!-- <bean id="XXX" class="XXX">
+    <bean id="accountDao" class="edu.gust.dao.impl.AccountDao">
+        <!-- 将jdbcTemplate注入到accountDao实例中 -->
         <property name="jdbcTemplate" ref="jdbcTemplate"/>
-    </bean> -->
+    </bean>
 
 
 
