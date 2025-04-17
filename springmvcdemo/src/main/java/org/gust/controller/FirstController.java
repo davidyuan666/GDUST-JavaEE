@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+// @RequestMapping(value="/springMVC")
 public class FirstController {
     //设定当前方法的访问映射地址
     @RequestMapping("/firstController")
@@ -13,4 +14,7 @@ public class FirstController {
         //设定具体跳转的页面
         return "success";
     }
+
+
+
 }
