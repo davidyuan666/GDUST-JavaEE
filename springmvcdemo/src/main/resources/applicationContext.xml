@@ -2,10 +2,13 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
-       http://www.springframework.org/schema/context/spring-context.xsd">
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
         <!-- 配置 Spring MVC要扫描的包 -->
         <context:component-scan base-package="org.gust.controller"/>
@@ -14,5 +17,32 @@
                 <property name="prefix" value="/WEB-INF/pages/"/>
                 <property name="suffix" value=".jsp"/>
         </bean>
+
+
+        <!-- 配置类型转换器工厂 -->
+        <bean id="converterService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+            <!-- 给工厂注入一个新的类型转换器 -->
+            <property name="converters">
+                <array>
+                    <!-- 配置自定义类型转换器 -->
+                    <bean class="org.gust.convert.DateConverter"/>
+                </array>
+            </property>
+        </bean>
+        <!-- 装载转换器 -->
+        <mvc:annotation-driven conversion-service="converterService"/>
+
+
+        <!-- 配置创建 spring 容器要扫描的包 -->
+        <context:component-scan base-package="org.gust.controller"/>
+            <!-- 配置视图解析器 -->
+            <bean	class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+                <property name="prefix" value="/WEB-INF/pages/"/>
+                <property name="suffix" value=".jsp"/>
+            </bean>
+        <mvc:annotation-driven />
+
+
+
 
 </beans>
