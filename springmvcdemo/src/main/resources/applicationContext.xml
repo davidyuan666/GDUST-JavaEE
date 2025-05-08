@@ -10,39 +10,40 @@
        http://www.springframework.org/schema/mvc
        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-        <!-- 配置 Spring MVC要扫描的包 -->
-        <context:component-scan base-package="org.gust.controller"/>
-        <!-- 配置视图解析器 -->
-        <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-                <property name="prefix" value="/WEB-INF/pages/"/>
-                <property name="suffix" value=".jsp"/>
-        </bean>
+    <!-- 配置创建 spring 容器要扫描的包 -->
+    <context:component-scan base-package="org.gust.controller"/>
+    
+    <!-- 配置视图解析器 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/pages/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
 
+    <!-- 配置类型转换器工厂 -->
+    <bean id="converterService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <!-- 给工厂注入一个新的类型转换器 -->
+        <property name="converters">
+            <array>
+                <!-- 配置自定义类型转换器 -->
+                <bean class="org.gust.convert.DateConverter"/>
+            </array>
+        </property>
+    </bean>
+    
+    <!-- 装载转换器 -->
+    <mvc:annotation-driven conversion-service="converterService"/>
 
-        <!-- 配置类型转换器工厂 -->
-        <bean id="converterService" class="org.springframework.context.support.ConversionServiceFactoryBean">
-            <!-- 给工厂注入一个新的类型转换器 -->
-            <property name="converters">
-                <array>
-                    <!-- 配置自定义类型转换器 -->
-                    <bean class="org.gust.convert.DateConverter"/>
-                </array>
-            </property>
-        </bean>
-        <!-- 装载转换器 -->
-        <mvc:annotation-driven conversion-service="converterService"/>
-
-
-        <!-- 配置创建 spring 容器要扫描的包 -->
-        <context:component-scan base-package="org.gust.controller"/>
-            <!-- 配置视图解析器 -->
-            <bean	class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-                <property name="prefix" value="/WEB-INF/pages/"/>
-                <property name="suffix" value=".jsp"/>
-            </bean>
-        <mvc:annotation-driven />
-
-
-
-
+    <!--配置静态资源的访问映射，此配置中的文件，将不被前端控制器拦截 -->
+    <mvc:resources mapping="/js/**" location="/js/" />
+    
+    <!-- 注入 SimpleMappingExceptionResolver-->
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <!-- 定义特殊处理的异常，类名或完全路径名作为key，对应的异常页面名作为值-->
+        <property name="exceptionMappings">
+            <props>
+                <prop key="java.lang.NullPointerException">nullPointerExp.jsp</prop>
+                <prop key="IOException">IOExp.jsp</prop>
+            </props>
+        </property>
+    </bean>
 </beans>
